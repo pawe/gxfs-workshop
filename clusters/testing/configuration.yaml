@@ -1,0 +1,73 @@
+source: https://github.com/syself/gxfs-workshop.git
+sourceRef: main
+namespace: argocd
+
+applications:
+  - name: app-of-apps
+    project: gitops
+    enabled: true
+    sourcePath: argocd
+    helmValues:
+      - ../clusters/mgt/configuration.yaml
+
+  - name: gitops
+    project: gitops
+    enabled: true
+    sourcePath: argocd
+    helmValues:
+      - ../clusters/mgt/values/gitops.yaml
+
+  - name: base-apps
+    project: base
+    enabled: true
+    sourcePath: argocd
+    helmValues:
+      - ../clusters/mgt/values/base.yaml
+
+  - name: idm
+    project: idm
+    enabled: true
+    sourcePath: argocd
+    helmValues:
+      - ../clusters/mgt/values/idm.yaml
+
+  - name: gxfs-portal
+    project: gxfs-portal
+    enabled: true
+    sourcePath: argocd
+    helmValues:
+      - ../clusters/mgt/values/gxfs-portal.yaml
+
+projects:
+  - name: gitops
+    enabled: true
+    destinations:
+    - namespace: '*'
+      server: '*'
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  - name: base
+    enabled: true
+    destinations:
+    - namespace: '*'
+      server: '*'
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  - name: idm
+    enabled: true
+    destinations:
+    - namespace: '*'
+      server: '*'
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  - name: gxfs-portal
+    enabled: true
+    destinations:
+    - namespace: '*'
+      server: '*'
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

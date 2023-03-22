@@ -1,0 +1,12 @@
+argocd:
+  nameOverride: argocd
+  crds:
+    # -- Install and upgrade CRDs
+    install: true
+
+  global:
+    # Default image used by all components
+    image:
+      repository: ghcr.io/argoproj/argo-cd/argocd
+      tag: "2.6.0-566d50f6"
+      imagePullPolicy: Always

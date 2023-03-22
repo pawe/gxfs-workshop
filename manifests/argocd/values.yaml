@@ -1,0 +1,115 @@
+crds:
+  install: true
+
+namespaces: ""
+teamInstancesAreClusterScoped: true
+
+argocd:
+  nameOverride: argocd
+  ## Custom resource configuration
+  crds:
+    # -- Install and upgrade CRDs
+    install: false
+
+  global:
+    # Default image used by all components
+    image:
+      repository: ghcr.io/argoproj/argo-cd/argocd
+      tag: "2.6.0-566d50f6"
+      imagePullPolicy: Always
+
+  ## Argo Configs
+  configs:
+    # General Argo CD configuration
+    ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
+    cm:
+      # -- Create the argocd-cm configmap for [declarative setup]
+      create: true
+      # -- Argo CD's externally facing base URL (optional). Required when configuring SSO
+      resource.exclusions: |
+        - apiGroups:
+            - tekton.dev
+          clusters:
+            - '*'
+          kinds:
+            - TaskRun
+            - PipelineRun
+        - apiGroups:
+            - cilium.io
+          kinds:
+            - CiliumIdentity
+          clusters:
+            - "*"
+
+    params:
+      # -- Run server without TLS
+      server.insecure: true
+    rbac:
+      create: true
+      policy.csv: |
+        g, ArgoCDUsers, role:readonly
+        g, system:cluster-admins, role:admin
+        g, ArgoCDAdmins, role:admin
+
+  redis-ha:
+    enabled: false
+
+  dex:
+    enabled: false
+
+  controller:
+    clusterAdminAccess:
+      enabled: true
+    replicas: 1
+    pdb:
+      enabled: false
+      minAvailable: 1
+
+  server:
+    clusterAdminAccess:
+      enabled: true
+    autoscaling:
+      enabled: false
+      minReplicas: 2
+    pdb:
+      enabled: false
+      minAvailable: 1
+    ingress:
+      enabled: false
+      ingressClassName: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      hosts:
+        - example.com
+      tls:
+      - secretName: argocd-wildcard
+        hosts:
+          - example.com
+    ingressGrpc:
+      enabled: false
+      ingressClassName: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+      hosts:
+        - example.com
+      tls:
+      - secretName: argocd-wildcard
+        hosts:
+          - example.com
+
+  repoServer:
+    clusterAdminAccess:
+      enabled: true
+    autoscaling:
+      enabled: false
+      minReplicas: 2
+    pdb:
+      enabled: false
+      minAvailable: 1
+
+  applicationSet:
+    replicaCount: 1
+    pdb:
+      enabled: false
+      minAvailable: 1

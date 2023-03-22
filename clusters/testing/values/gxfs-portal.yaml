@@ -1,0 +1,12 @@
+source: https://github.com/syself/gxfs-workshop.git
+sourceRef: main
+namespace: argocd
+project: gxfs-portal
+
+applications:
+- name: portal-postgres
+  namespace: gxfs-portal
+  enabled: true
+  sourcePath: manifests/postgres
+  helmValues:
+      - ../../clusters/mgt/values/config/gxfs-portal-postgres.yaml
