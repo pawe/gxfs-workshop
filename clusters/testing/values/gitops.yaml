@@ -9,4 +9,4 @@ applications:
   enabled: true
   sourcePath: manifests/argocd
   helmValues:
-    - ../../clusters/mgt/values/config/gitops-config.yaml
+    - ../../clusters/testing/values/config/gitops-config.yaml

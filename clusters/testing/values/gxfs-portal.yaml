@@ -9,4 +9,4 @@ applications:
   enabled: true
   sourcePath: manifests/postgres
   helmValues:
-      - ../../clusters/mgt/values/config/gxfs-portal-postgres.yaml
+      - ../../clusters/testing/values/config/gxfs-portal-postgres.yaml

@@ -8,35 +8,35 @@ applications:
     enabled: true
     sourcePath: argocd
     helmValues:
-      - ../clusters/mgt/configuration.yaml
+      - ../clusters/testing/configuration.yaml
 
   - name: gitops
     project: gitops
     enabled: true
     sourcePath: argocd
     helmValues:
-      - ../clusters/mgt/values/gitops.yaml
+      - ../clusters/testing/values/gitops.yaml
 
   - name: base-apps
     project: base
     enabled: true
     sourcePath: argocd
     helmValues:
-      - ../clusters/mgt/values/base.yaml
+      - ../clusters/testing/values/base.yaml
 
   - name: idm
     project: idm
     enabled: true
     sourcePath: argocd
     helmValues:
-      - ../clusters/mgt/values/idm.yaml
+      - ../clusters/testing/values/idm.yaml
 
   - name: gxfs-portal
     project: gxfs-portal
     enabled: true
     sourcePath: argocd
     helmValues:
-      - ../clusters/mgt/values/gxfs-portal.yaml
+      - ../clusters/testing/values/gxfs-portal.yaml
 
 projects:
   - name: gitops
