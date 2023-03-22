@@ -10,3 +10,12 @@ applications:
   sourcePath: manifests/postgres
   helmValues:
       - ../../clusters/testing/values/config/gxfs-portal-postgres.yaml
+
+- name: portal-frontend
+  namespace: gxfs-portal
+  enabled: true
+  source: https://gaia-x.gitlab.io/data-infrastructure-federation-services/gxfs-integration/applications/por/helm
+  chartName: integration
+  sourceRef: 1.2.1
+  helmValues:
+      - ../../clusters/testing/values/config/gxfs-portal.yaml
