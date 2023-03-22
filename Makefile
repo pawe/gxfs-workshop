@@ -19,9 +19,9 @@ all: help
 help: ## Display this help.
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-install-argocd: ## make install-argocd NAME=<name> KUBECONFIG_PATH=<path-to-kubeconfig>
-	kubectl create namespace argocd --dry-run=client -o yaml | kubectl --kubeconfig=$(KUBECONFIG_PATH) apply -f - 
-	helm template -n argocd argocd manifests/argocd -f clusters/$(NAME)/values/config/gitops-config.yaml | kubectl --kubeconfig=$(KUBECONFIG_PATH) -n argocd apply -f -
+install-argocd: ## make install-argocd 
+	kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f - 
+	helm template -n argocd argocd manifests/argocd -f clusters/testing/values/config/gitops-config.yaml | kubectl -n argocd apply -f -
 
-install-app-of-apps: ## Install and update the app-of-apps Usage: make install-app-of-apps NAME=<name> KUBECONFIG_PATH=<path-to-kubeconfig>
-	helm template -n argocd app-of-apps argocd -f clusters/$(NAME)/configuration.yaml | kubectl --kubeconfig=$(KUBECONFIG_PATH) -n argocd apply -f -
+install-app-of-apps: ## Install and update the app-of-apps Usage: make install-app-of-apps 
+	helm template -n argocd app-of-apps argocd -f clusters/testing/configuration.yaml | kubectl -n argocd apply -f -
