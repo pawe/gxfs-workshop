@@ -27,3 +27,6 @@ envValueFrom:
     secretKeyRef:
       key: password
       name: authentik-postgres-app
+
+redis:
+  enabled: true
