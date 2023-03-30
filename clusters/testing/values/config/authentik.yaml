@@ -29,4 +29,4 @@ envValueFrom:
       name: authentik-postgres-app
 
 redis:
-  enabled: true
+  enabled: false
