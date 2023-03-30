@@ -1,4 +1,4 @@
-source: https://github.com/syself/gxfs-workshop.git
+source: https://github.com/pawe/gxfs-workshop.git
 sourceRef: main
 namespace: argocd
 
