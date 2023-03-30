@@ -11,9 +11,9 @@ postgres:
         memory: "64Mi"
     storage:
       size: 2Gi
-      storageClass: standard
+      storageClass: longhorn
       resizeInUseVolumes: true
     walStorage:
       size: 1Gi
-      storageClass: standard
+      storageClass: longhorn
       resizeInUseVolumes: true
